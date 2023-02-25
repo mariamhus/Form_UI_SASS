@@ -1,0 +1,70 @@
+// Mixin: 
+@mixin rect{
+    width: 100px;
+    height: 200px;
+    background-color: cadetblue;
+    font-size: 30pt;
+}
+
+@mixin square($size:150px,$color:pink,$font:23pt){
+    width: $size;
+    height: $size;
+    background-color: $color;
+    font-size: $font;
+}
+
+// .mixin-elem{
+//     //The order differs here as compared to the @extends
+//     @include rect();
+//     background-color: aquamarine;
+// }
+
+// .mixin-square{
+//     // @include square(200px,red,20pt); //using my own arguments
+//     @include square(); //will use default params
+// }
+
+// mixin with "if condition" and "for loop" to 
+// disallow repetition in code
+
+@mixin gridCreation($colNum:12,$screenName:'',$breakpoint:0px){
+    @if($screenName==''){
+        @media all and (min-width: $breakpoint) {
+            @for $i from 1 through $colNum{
+                .col-#{$i}{
+                    width: ($i/$colNum)*100%;
+                }
+            }
+        }
+    }@else{
+        @media all and (min-width: $breakpoint) {
+            @for $i from 1 through $colNum{
+                .col-#{$screenName}-#{$i}{
+                    width: ($i/$colNum)*100%;
+                }
+            }
+        }
+    }
+}
+// viewport = what we see from the window object 
+// VS window = the entire page including the parts we don't see
+
+
+// @include gridCreation(12,"",0px);
+// @include gridCreation(12,"sm",500px);
+// @include gridCreation(12,"md",900px);
+// @include gridCreation(12,"lg",1200px);
+
+// we can also use conditions for implementing Themes WITHOUT js interjection
+
+@mixin theme($is-dark:false){
+    @if($is-dark){
+        background-color: black;
+    }@else{
+        background-color:aliceblue;
+    }
+}
+
+// .theme-elem{
+//     @include theme();
+// }

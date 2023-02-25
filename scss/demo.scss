@@ -1,0 +1,47 @@
+@mixin gridCreation($colNum:12,$screenName:'',$breakpoint:0px){
+    @if($screenName==''){
+        @media all and (min-width: $breakpoint) {
+            @for $i from 1 through $colNum{
+                .col-#{$i}{
+                    width: ($i/$colNum)*100%;
+                }
+            }
+        }
+    }@else{
+        @media all and (min-width: $breakpoint) {
+            @for $i from 1 through $colNum{
+                .col-#{$screenName}-#{$i}{
+                    width: ($i/$colNum)*100%;
+                }
+            }
+        }
+    }
+}
+$displays:flex,grid,block,inline;
+@mixin display($screenName:'',$breakpoint:0px){
+    @if($screenName==''){
+        @media all and (min-width: $breakpoint) {
+        @each $i in $displays{
+            .d-#{$i}{
+                display: $i;
+            }
+        }} 
+    }@else{
+        @media all and (min-width: $breakpoint) {
+        @each $i in $displays{
+            .d-#{$screenName}-#{$i}{
+                display: $i;
+            }
+        } 
+    }
+}
+    
+}
+@include gridCreation(12,"",0px);
+@include gridCreation(12,"sm",500px);
+@include gridCreation(12,"md",900px);
+@include gridCreation(12,"lg",1200px);
+@include display();
+@include display('sm',500px);
+@include display('md',900px);
+@include display('lg',1200px);
